@@ -7,7 +7,7 @@ const morgan=require("morgan");
 
 app.use(bodyparser.urlencoded({extended:false}));
 app.use(bodyparser.json());
-mongoose.connect("mongodb+srv://umair:umair@12345@cluster0.dfljm.mongodb.net/Ecommerce?retryWrites=true&w=majority",{ useNewUrlParser: true },{ useUnifiedTopology: true });
+mongoose.connect("mongodb://uio8atqsrhxfhlqccmdn:JTZHu4SIElZVqeXFlj00@b6vkwy6zwbqmjhr-mongodb.services.clever-cloud.com:27017/b6vkwy6zwbqmjhr",{ useNewUrlParser: true },{ useUnifiedTopology: true });
 mongoose.Promise=global.Promise;      
 const userRouter=require("./routes/user");
 const products=require("./routes/products");
