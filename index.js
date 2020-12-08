@@ -8,7 +8,7 @@ const morgan=require("morgan");
 app.use(bodyparser.urlencoded({extended:false}));
 app.use(bodyparser.json());
 mongoose.connect("mongodb+srv://umair:umair@12345@cluster0.dfljm.mongodb.net/Ecommerce?retryWrites=true&w=majority",{ useNewUrlParser: true },{ useUnifiedTopology: true });
-mongoose.Promise=global.Promise;
+mongoose.Promise=global.Promise;      
 const userRouter=require("./routes/user");
 const products=require("./routes/products");
 app.use("/user",userRouter);
