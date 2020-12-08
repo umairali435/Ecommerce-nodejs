@@ -1,7 +1,6 @@
 const express= require("express");
 const router=express.Router();
 const mongoose=require("mongoose");
-const bcypt=require("bcrypt");
 const jwt =require("jsonwebtoken");
 const User=require("../model/user");
 const tokenauth=require("../Auth/authtoken");
@@ -11,18 +10,10 @@ router.post("/",(req,res,next)=>{
             res.status(409).json({
                 message:"User already exists by this email",
             });
-        }else{
-            
-     bcypt.hash(req.body.password,10,(err,hash)=>{
-        if(err){
-           return res.status(500).json({
-                error:err,
-            });
-        }else{
-            const user=User({
+        }else{const user=User({
                _id:mongoose.Types.ObjectId(),
                email:req.body.email,
-               password:hash,
+               password:req.body.password,
             });
            user.save().then(result=>{
                
@@ -38,8 +29,6 @@ router.post("/",(req,res,next)=>{
            }); 
         }
     });
-        }
-    });
 }); 
 router.post("/login",(req,res,next)=>{
      User.find({email:req.body.email,
@@ -49,12 +38,6 @@ router.post("/login",(req,res,next)=>{
                  message:"Auth failed"
              });
          }
-         bcypt.compare(req.body.password,result[0].password ,(err,results)=>{
-            if(err){
-               return res.status(500).json({
-                    message:"Auth failed",
-                });
-            }
             if(results){
                 const token=jwt.sign({
                  email:result[0].email,
@@ -71,7 +54,7 @@ router.post("/login",(req,res,next)=>{
             res.status(500).json({   
                 message:"Auth failed",  
             });
-        });
+    
      }).catch(err=>{
          error:"Error while Login ";
          console.log(err);
